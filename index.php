@@ -1,6 +1,6 @@
 <?php 
     include 'includes/inc.dbh.php';
-    $sql = "SELECT * FROM countries WHERE lang = 'fr'"; 
+    $sql = "SELECT students.id, students.name, students.country, countries.code, countries.lang FROM `students` INNER JOIN `countries` ON students.country = countries.code WHERE lang = 'fr'"; 
     $result = mysqli_query($conn, $sql);
     $result_check = mysqli_num_rows($result);
 ?>
@@ -14,8 +14,26 @@
     <title>TechLaunch Students</title>
 </head>
 <body>
-    <table></table>
-    <?php 
+    <h1>TechLaunch Students Who Speak French</h1>
+    <a href="index2.php">View TL Students Who Are Asian American</a>
+    <table border = "1">
+        <tr>
+            <td>name</td>
+            <td>country</td>
+            <td>language</td>
+        </tr>
+        <?php if ($result_check > 0) { ?>
+            <?php while ($row = mysqli_fetch_assoc($result)) { ?>
+            <tr>
+                <td><?= $row['name']?></td>
+                <td><?= $row['country']?></td>
+                <td><?= $row['lang']?></td>
+            </tr>
+            <?php } ?> 
+        <?php } ?>
+
+    </table>
+    <!-- </*?php 
        
 
         if ($result_check > 0) {
@@ -23,6 +41,6 @@
                 echo $row['name']."<br>" ;
             }
         }
-    ?>
+    ?> -->
 </body>
 </html>
